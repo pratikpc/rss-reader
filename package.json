@@ -1,0 +1,91 @@
+{
+  "name": "pc-rss-reader",
+  "productName": "PC RSS Reader",
+  "version": "0.0.1",
+  "description": "A simple React based RSS Reader which uses Electron to bypass CORS",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts ."
+  },
+  "keywords": [
+    "RSS",
+    "electron",
+    "React",
+    "TypeScript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pratikpc/rss-reader"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": "./tools/forge/forge.config.js"
+  },
+  "author": {
+    "name": "Pratik Chowdhury",
+    "email": "pratikc@live.co.uk",
+    "url": "https://www.linkedin.com/in/pratik-chowdhury-889bb2183/"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.59",
+    "@electron-forge/maker-appx": "^6.0.0-beta.59",
+    "@electron-forge/maker-deb": "6.0.0-beta.59",
+    "@electron-forge/maker-rpm": "6.0.0-beta.59",
+    "@electron-forge/maker-snap": "^6.0.0-beta.59",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.59",
+    "@electron-forge/maker-zip": "6.0.0-beta.59",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.59",
+    "@electron-forge/publisher-github": "^6.0.0-beta.59",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/dompurify": "^2.2.3",
+    "@types/webpack-env": "^1.16.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.2.0",
+    "electron": "^13.2.2",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-typescript-prettier": "^4.2.0",
+    "file-loader": "^6.2.0",
+    "fork-ts-checker-webpack-plugin": "^6.3.2",
+    "less": "^4.1.1",
+    "less-loader": "10.0.1",
+    "node-loader": "^2.0.0",
+    "react-hot-loader": "^4.13.0",
+    "style-loader": "^3.2.1",
+    "ts-loader": "9.2.5",
+    "webpack": "^5.51.1"
+  },
+  "dependencies": {
+    "@fontsource/roboto": "^4.5.0",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.3",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "clsx": "^1.1.1",
+    "dompurify": "^2.3.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "html-react-parser": "^1.2.8",
+    "https-browserify": "^1.0.0",
+    "path-browserify": "^1.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "rss-parser": "^3.12.0",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "timers-browserify": "^2.0.12",
+    "typescript": "^4.4.2",
+    "update-electron-app": "^2.0.1",
+    "web-vitals": "^2.1.0"
+  }
+}
