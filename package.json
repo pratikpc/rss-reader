@@ -1,7 +1,7 @@
 {
   "name": "pc-rss-reader",
   "productName": "PC RSS Reader",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A simple React based RSS Reader which uses Electron to bypass CORS",
   "main": ".webpack/main",
   "scripts": {
