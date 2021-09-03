@@ -9,18 +9,25 @@ import FeedConfiguration from './FeedConfiguration';
 
 function SideListItem({
   item,
-  onClick,
+  onSelect,
+  onModify,
   removeUrl,
 }: {
   item: FeedConfiguration;
-  onClick: (_: FeedConfiguration) => void;
+  onSelect: (_: FeedConfiguration) => void;
+  onModify: (_: FeedConfiguration) => void;
   removeUrl: (url: string[]) => void;
 }) {
   return (
     <ListItem
       button
       key={item.name + Math.random()}
-      onClick={() => onClick(item)}
+      onMouseDown={(event) => {
+        // Left Click
+        if (event.button === 0) onSelect(item);
+        // Other click
+        else onModify(item);
+      }}
     >
       <ListItemText primary={item.name} />
       <ListItemSecondaryAction>
@@ -37,11 +44,13 @@ function SideListItem({
 }
 export default function SideList({
   items,
-  onClick,
+  onSelect,
+  onModify,
   removeUrl,
 }: {
+  onModify: (_: FeedConfiguration) => void;
   items: FeedConfiguration[];
-  onClick: (_: FeedConfiguration) => void;
+  onSelect: (_: FeedConfiguration) => void;
   removeUrl: (url: string[]) => void;
 }) {
   return (
@@ -50,7 +59,8 @@ export default function SideList({
         <SideListItem
           item={item}
           key={item.name + Math.random()}
-          onClick={onClick}
+          onSelect={onSelect}
+          onModify={onModify}
           removeUrl={removeUrl}
         />
       ))}

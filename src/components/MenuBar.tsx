@@ -8,34 +8,22 @@ import RefreshIcon from '@material-ui/icons/RefreshOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import AddButton from '@material-ui/icons/AddToQueue';
-import AddFeedDialog from './AddFeedDialog';
 
 export default function MenuBar({
   classes,
   open,
   setOpen,
   forceRefresh,
-  newFeedAdded,
   onThemeChangeClick,
+  setAddFeedDialogOpen,
 }: {
   classes: any;
   open: boolean;
   setOpen: (_: boolean) => void;
+  setAddFeedDialogOpen: (_: boolean) => void;
   forceRefresh: () => void;
   onThemeChangeClick: () => void;
-  newFeedAdded: (name: string, url: string) => void;
 }) {
-  const [addFeedDialogOpen, setAddFeedDialogOpen] = React.useState(false);
-  const [name, setName] = React.useState('');
-  const [addFeedDialogUrl, setAddFeedDialogUrl] = React.useState('');
-  React.useEffect(() => {
-    if (addFeedDialogOpen) return;
-    if (addFeedDialogUrl === '') return;
-    newFeedAdded(name, addFeedDialogUrl);
-    setName('');
-    setAddFeedDialogUrl('');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addFeedDialogOpen]);
   return (
     <>
       <AppBar
@@ -85,14 +73,6 @@ export default function MenuBar({
           </div>
         </Toolbar>
       </AppBar>
-      <AddFeedDialog
-        open={addFeedDialogOpen}
-        setOpen={setAddFeedDialogOpen}
-        name={name}
-        setName={setName}
-        url={addFeedDialogUrl}
-        setUrl={setAddFeedDialogUrl}
-      />
     </>
   );
 }

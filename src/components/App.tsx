@@ -25,6 +25,7 @@ import SideList from './SideList';
 import FeedConfiguration from './FeedConfiguration';
 import FeedList from './FeedList';
 import MenuBar from './MenuBar';
+import AddFeedDialog from './AddFeedDialog';
 
 const drawerWidth = '15vw';
 
@@ -116,7 +117,7 @@ function MaxLength2D<T>(arrays: T[][]) {
   return Math.max(...lengths);
 }
 
-function Sequentialize<T>(items: T[][]) {
+function Sequentialize<T>(items: T[][]): T[] {
   if (items.length <= 1) return items.flat();
   const res: T[] = [];
   const maxLength = MaxLength2D(items);
@@ -148,13 +149,52 @@ export default function App() {
 
   const [refresh, setRefresh] = React.useState(false);
 
+  const [addFeedDialogOpen, setAddFeedDialogOpen] = React.useState(false);
+  const [addFeedName, setAddFeedName] = React.useState('');
+  const [addFeedDialogUrl, setAddFeedDialogUrl] = React.useState('');
+
+  async function newFeedAdded(name: string, url: string) {
+    if (url === '') return;
+    const urlSplit = url.split(';').filter((url) => url != null && url !== '');
+    if (urlSplit.length === 0) return;
+    if (name === '') {
+      const feed = await ExtractFeed(urlSplit[0]);
+      if (feed.title == null) return;
+      name = feed.title;
+    }
+    if (
+      urlSplit.length === 1 &&
+      feedList.filter(
+        (item) => item.url.includes(urlSplit[0]) && item.url.length === 1,
+      ).length !== 0
+    )
+      return;
+    setFeedList([...feedList, { name, url: urlSplit }]);
+    setSaveToFeedList(true);
+  }
+
+  React.useEffect(() => {
+    if (addFeedDialogOpen) return;
+    if (addFeedDialogUrl === '') return;
+    newFeedAdded(addFeedName, addFeedDialogUrl);
+    setAddFeedName('');
+    setAddFeedDialogUrl('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addFeedDialogOpen]);
+
   React.useEffect(() => {
     async function Fetch() {
       if (urls.length === 0) {
         setFeedItems([]);
         return;
       }
-      const extractFeeds = await ExtractFeeds(urls);
+      const extractFeeds = (await ExtractFeeds(urls))
+        .filter((x) => x != null)
+        .sort((a, b) =>
+          a.isoDate == null || b.isoDate == null
+            ? 1
+            : new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime(),
+        );
       setFeedItems(extractFeeds);
     }
     Fetch();
@@ -173,11 +213,12 @@ export default function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   React.useEffect(() => {
-    const feedList: FeedConfiguration[] =
+    const feeds: FeedConfiguration[] =
       JSON.parse(window.localStorage.getItem('feed') ?? '[]') ?? [];
+    // console.log(feedList);
 
-    if (feedList.length > 0) setUrls(feedList[0].url);
-    setFeedList(feedList);
+    if (feeds.length > 0) setUrls(feeds[0].url);
+    setFeedList(feeds);
     setIfDarkTheme(prefersDarkMode);
   }, []);
 
@@ -201,27 +242,8 @@ export default function App() {
             if (open && feedList.length === 0) return;
             setOpen(open);
           }}
+          setAddFeedDialogOpen={setAddFeedDialogOpen}
           onThemeChangeClick={() => setIfDarkTheme(!isDarkTheme)}
-          newFeedAdded={async (name, url) => {
-            if (url === '') return;
-            const urlSplit = url.split(';');
-            if (urlSplit.length === 0) return;
-            if (name === '') {
-              const feed = await ExtractFeed(urlSplit[0]);
-              if (feed.title == null) return;
-              name = feed.title;
-            }
-            if (
-              urlSplit.length === 1 &&
-              feedList.filter(
-                (item) =>
-                  item.url.includes(urlSplit[0]) && item.url.length === 1,
-              ).length !== 0
-            )
-              return;
-            setFeedList([...feedList, { name, url: urlSplit }]);
-            setSaveToFeedList(true);
-          }}
         />
         <Drawer
           className={classes.drawer}
@@ -244,12 +266,17 @@ export default function App() {
           <Divider />
           <SideList
             items={feedList}
-            onClick={(item) => setUrls(item.url)}
+            onSelect={(item) => setUrls(item.url)}
             removeUrl={(url) => {
               const feed = feedList.filter((item) => item.url !== url);
               if (feed.length === 0) setFeedItems([]);
               setFeedList(feed);
               setSaveToFeedList(true);
+            }}
+            onModify={(item) => {
+              setAddFeedName(item.name);
+              setAddFeedDialogUrl(item.url.join(';'));
+              setAddFeedDialogOpen(true);
             }}
           />
         </Drawer>
@@ -278,6 +305,14 @@ export default function App() {
           />
         </main>
       </div>
+      <AddFeedDialog
+        open={addFeedDialogOpen}
+        setOpen={setAddFeedDialogOpen}
+        name={addFeedName}
+        setName={setAddFeedName}
+        url={addFeedDialogUrl}
+        setUrl={setAddFeedDialogUrl}
+      />
     </ThemeProvider>
   );
 }

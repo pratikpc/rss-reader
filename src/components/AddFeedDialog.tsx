@@ -10,9 +10,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 export default function FormDialog({
   open,
   setOpen,
-  name,
+  name = '',
   setName,
-  url,
+  url = '',
   setUrl,
 }: {
   open: boolean;
@@ -60,6 +60,8 @@ export default function FormDialog({
         <DialogActions>
           <Button
             onClick={() => {
+              setName('');
+              setUrl('');
               setOpen(false);
             }}
             color='primary'
