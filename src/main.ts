@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { app, BrowserWindow, shell } from 'electron';
 import AutoUpdate from 'update-electron-app';
 
