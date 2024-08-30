@@ -153,9 +153,9 @@ export default function App() {
   const [addFeedName, setAddFeedName] = React.useState('');
   const [addFeedDialogUrl, setAddFeedDialogUrl] = React.useState('');
 
-  async function newFeedAdded(name: string, url: string) {
-    if (url === '') return;
-    const urlSplit = url.split(';').filter((url) => url != null && url !== '');
+  async function newFeedAdded(name: string, urls: string) {
+    if (urls === '') return;
+    const urlSplit = urls.split(';').filter((url) => url != null && url !== '');
     if (urlSplit.length === 0) return;
     if (name === '') {
       const feed = await ExtractFeed(urlSplit[0]);
