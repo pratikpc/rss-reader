@@ -87,4 +87,7 @@ typings/
 
 # Electron-Forge
 out/
+
+# Build
 package-lock.json
+pnpm-lock.yaml
