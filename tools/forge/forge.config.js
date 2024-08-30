@@ -63,12 +63,12 @@ module.exports = {
   ],
   // Forge Plugins
   plugins: [
-    [
+    {
       // The Webpack plugin allows you to use standard Webpack tooling to compile both your main process code
       // and your renderer process code, with built in support for Hot Module Reloading in the renderer
       // process and support for multiple renderers.
-      '@electron-forge/plugin-webpack',
-      {
+      name: '@electron-forge/plugin-webpack',
+      config: {
         // Ports
         port: 3000, // Webpack Dev Server port
         loggerPort: 9000, // Logger port
@@ -99,6 +99,6 @@ module.exports = {
           ],
         },
       },
-    ],
+    },
   ],
 };
