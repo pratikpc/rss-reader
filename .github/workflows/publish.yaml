@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@master
         with:
-          node-version: 14
+          node-version: 22
       - name: install dependencies
         run: npm install
       - name: Install RPM and DEB
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@master
         with:
-          node-version: 14
+          node-version: 22
       - name: install dependencies
         run: npm install
       - name: build
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@master
         with:
-          node-version: 14
+          node-version: 22
       - name: install dependencies
         run: npm install
       - name: build
