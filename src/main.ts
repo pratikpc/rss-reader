@@ -6,6 +6,27 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 AutoUpdate();
 
+function UpsertKeyValue(
+  obj: Record<string, unknown>,
+  keyToChange: string,
+  value: unknown,
+) {
+  const keyToChangeLower = keyToChange.toLowerCase();
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key of Object.keys(obj)) {
+    if (key.toLowerCase() === keyToChangeLower) {
+      // Reassign old key
+      // eslint-disable-next-line no-param-reassign
+      obj[key] = value;
+      // Done
+      return;
+    }
+  }
+  // Insert at end instead
+  // eslint-disable-next-line no-param-reassign
+  obj[keyToChange] = value;
+}
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   // eslint-disable-line global-require
@@ -52,16 +73,18 @@ function createWindow() {
 
   win.webContents.session.webRequest.onBeforeSendHeaders(
     (details, callback) => {
-      callback({ requestHeaders: { Origin: '*', ...details.requestHeaders } });
+      const { requestHeaders } = details;
+      UpsertKeyValue(requestHeaders, 'Access-Control-Allow-Origin', ['*']);
+      callback({ requestHeaders });
     },
   );
 
   win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+    const { responseHeaders } = details;
+    UpsertKeyValue(responseHeaders, 'Access-Control-Allow-Origin', ['*']);
+    UpsertKeyValue(responseHeaders, 'Access-Control-Allow-Headers', ['*']);
     callback({
-      responseHeaders: {
-        'Access-Control-Allow-Origin': ['*'],
-        ...details.responseHeaders,
-      },
+      responseHeaders,
     });
   });
 
