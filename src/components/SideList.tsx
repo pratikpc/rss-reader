@@ -22,7 +22,7 @@ function SideListItem({
     <ListItem
       button
       key={item.name + Math.random()}
-      onMouseDown={(event) => {
+      onMouseDown={(event: any) => {
         // Left Click
         if (event.button === 0) onSelect(item);
         // Other click

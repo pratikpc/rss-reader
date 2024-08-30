@@ -38,7 +38,7 @@ export default function FormDialog({
           fullWidth
           required
           value={url}
-          onChange={(event) => {
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setUrl(event?.target.value ?? '');
           }}
         />
@@ -51,7 +51,7 @@ export default function FormDialog({
           fullWidth
           required
           value={name}
-          onChange={(event) => {
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setName(event?.target.value ?? '');
           }}
         />
