@@ -41,7 +41,6 @@ function createWindow() {
     autoHideMenuBar: !app.isPackaged,
     webPreferences: {
       nodeIntegration: false,
-      enableRemoteModule: false,
       contextIsolation: true,
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
