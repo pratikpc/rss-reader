@@ -107,7 +107,11 @@ const useStyles = makeStyles((theme: Theme) =>
 const parser = new Parser();
 
 async function ExtractFeed(url: string) {
-  const response = await fetch(url);
+  const headers = new Headers();
+  headers.append('Origin', '*');
+  const response = await fetch(url, {
+    headers,
+  });
   const text = await response.text();
   const feed = await parser.parseString(text);
   return feed;
