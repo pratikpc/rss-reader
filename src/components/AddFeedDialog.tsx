@@ -23,61 +23,59 @@ export default function FormDialog({
   setUrl: (_: string) => void;
 }) {
   return (
-    <>
-      <Dialog open={open} aria-labelledby='form-dialog-title'>
-        <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to the RSS Feed, please enter the details here
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin='dense'
-            id='URL'
-            label='URL'
-            type='url'
-            fullWidth
-            required
-            value={url}
-            onChange={(event) => {
-              setUrl(event?.target.value ?? '');
-            }}
-          />
-          <TextField
-            autoFocus
-            margin='dense'
-            id='Name'
-            label='Name'
-            type='text'
-            fullWidth
-            required
-            value={name}
-            onChange={(event) => {
-              setName(event?.target.value ?? '');
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setName('');
-              setUrl('');
-              setOpen(false);
-            }}
-            color='primary'
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              setOpen(false);
-            }}
-            color='primary'
-          >
-            Subscribe
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <Dialog open={open} aria-labelledby='form-dialog-title'>
+      <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          To subscribe to the RSS Feed, please enter the details here
+        </DialogContentText>
+        <TextField
+          autoFocus
+          margin='dense'
+          id='URL'
+          label='URL'
+          type='url'
+          fullWidth
+          required
+          value={url}
+          onChange={(event) => {
+            setUrl(event?.target.value ?? '');
+          }}
+        />
+        <TextField
+          autoFocus
+          margin='dense'
+          id='Name'
+          label='Name'
+          type='text'
+          fullWidth
+          required
+          value={name}
+          onChange={(event) => {
+            setName(event?.target.value ?? '');
+          }}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => {
+            setName('');
+            setUrl('');
+            setOpen(false);
+          }}
+          color='primary'
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            setOpen(false);
+          }}
+          color='primary'
+        >
+          Subscribe
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
